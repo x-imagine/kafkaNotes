@@ -1,0 +1,30 @@
+一、要求：
+1、JDK8(推荐)
+2、zookeeper（强依赖）
+
+二、kafka安装：
+1、下载kafka安装包并解压
+下载uri：https://mirrors.cnnic.cn/apache/kafka/2.1.1/
+
+
+三、kafka启动（启动之前要启动zookeeper服务）
+1、进入kafka目录/bin
+
+2、执行
+./zookeeper-server-start.sh ../config/zookeeper.properties & #启动zookeeper，如果先前已经安装了zookeeper，可以启动另一个。（可选）
+./kafka-server-start.sh ../config/server.properties &  #启动时一定要加配置文件。不然启不起来
+
+使用独立的zookeeper时版本要参考kafka libs下的zookeeper版本。
+
+
+ps:
+1、安装包下有zookeeper的相关包，可以直接启动这个zookeeper服务，在生产环境下建议不要使用，还是单独的使用zookeeper集群。
+
+
+2、如果想要在一台主机上启动多个kafka构建集群，需要复制一份zookeeper.properties文件修改其中关键的属性
+①broker.id=n
+②listeners=PLAINTEXT://:9093 如果想要在同一台机器上配置两个节点，则配置一个listeners端口为9093
+③log.dirs=/tmp/kafka-logs-n #存放数据的目录
+
+四、kafka 可视化管理工具
+kafka tool

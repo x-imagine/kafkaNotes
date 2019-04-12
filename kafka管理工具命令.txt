@@ -1,22 +1,22 @@
 ##列出所有主题
-kafka-topics.bat --zookeeper localhost:2181/kafka --list
+./kafka-topics.sh --zookeeper localhost:2181/kafka --list
 
 ##列出所有主题的详细信息
-kafka-topics.bat --zookeeper localhost:2181/kafka --describe
+./kafka-topics.sh --zookeeper localhost:2181/kafka --describe
 
 ##创建主题 主题名 my-topic，1副本，8分区
-kafka-topics.bat --zookeeper localhost:2181/kafka --create --replication-factor 1 --partitions 8 --topic my-topic
+./kafka-topics.sh --zookeeper localhost:2181/kafka --create --replication-factor 1 --partitions 8 --topic my-topic
 
 ##增加分区，注意：分区无法被删除
-kafka-topics.bat --zookeeper localhost:2181/kafka --alter --topic my-topic --partitions 16
+./kafka-topics.sh --zookeeper localhost:2181/kafka --alter --topic my-topic --partitions 16
 
 ##删除主题
-kafka-topics.bat --zookeeper localhost:2181/kafka --delete --topic my-topic
+./kafka-topics.sh --zookeeper localhost:2181/kafka --delete --topic my-topic
 
 ##列出消费者群组（仅Linux）
-kafka-topics.sh --new-consumer --bootstrap-server localhost:9092/kafka --list
+./kafka-topics.sh --new-consumer --bootstrap-server localhost:9092/kafka --list
 
 ##列出消费者群组详细信息（仅Linux）
-kafka-topics.sh --new-consumer --bootstrap-server localhost:9092/kafka --describe --group 群组名 
+./kafka-topics.sh --new-consumer --bootstrap-server localhost:9092/kafka --describe --group 群组名
 
 
