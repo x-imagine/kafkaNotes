@@ -21,39 +21,31 @@ public class KafkaConst {
     public static final String BROKER_LIST = "127.0.0.1:9093,127.0.0.1:9094,127.0.0.1:9095";
 
     /*======================生产者配置============================*/
-    public static Properties producerConfig(
-            Class<? extends Serializer> keySerializeClazz,
-            Class<? extends Serializer> valueSerializeClazz){
+    public static Properties producerConfig(Class<? extends Serializer> keySerializeClazz, Class<? extends Serializer> valueSerializeClazz) {
         Properties properties = new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,LOCAL_BROKER);
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,keySerializeClazz);
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,valueSerializeClazz);
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, LOCAL_BROKER);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializeClazz);
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializeClazz);
         return properties;
     }
 
     /*======================消费者配置========================*/
-    public static Properties consumerConfig(String groupId,
-            Class<? extends Deserializer> keyDeserializeClazz,
-            Class<? extends Deserializer> valueDeserializeClazz){
+    public static Properties consumerConfig(String groupId, Class<? extends Deserializer> keyDeserializeClazz, Class<? extends Deserializer> valueDeserializeClazz) {
         Properties properties = new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,LOCAL_BROKER);
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,keyDeserializeClazz);
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,valueDeserializeClazz);
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, LOCAL_BROKER);
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializeClazz);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializeClazz);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return properties;
     }
 
-    public static Map<String,Object> consumerConfigMap(String groupId,
-             Class<? extends Deserializer> keyDeserializeClazz,
-             Class<? extends Deserializer> valueDeserializeClazz){
-        Map<String,Object> properties = new HashMap<String, Object>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,LOCAL_BROKER);
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,keyDeserializeClazz);
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,valueDeserializeClazz);
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+    public static Map<String, Object> consumerConfigMap(String groupId, Class<? extends Deserializer> keyDeserializeClazz, Class<? extends Deserializer> valueDeserializeClazz) {
+        Map<String, Object> properties = new HashMap<String, Object>();
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, LOCAL_BROKER);
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializeClazz);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializeClazz);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return properties;
     }
-
-
 
 }

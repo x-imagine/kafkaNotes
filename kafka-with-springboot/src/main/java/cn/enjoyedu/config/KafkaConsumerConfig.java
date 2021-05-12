@@ -26,18 +26,25 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConsumerConfig {
+
     @Value("${kafka.consumer.servers}")
     private String servers;
+
     @Value("${kafka.consumer.enable.auto.commit}")
     private boolean enableAutoCommit;
+
     @Value("${kafka.consumer.session.timeout}")
     private String sessionTimeout;
+
     @Value("${kafka.consumer.auto.commit.interval}")
     private String autoCommitInterval;
+
     @Value("${kafka.consumer.group.id}")
     private String groupId;
+
     @Value("${kafka.consumer.auto.offset.reset}")
     private String autoOffsetReset;
+
     @Value("${kafka.consumer.concurrency}")
     private int concurrency;
 
@@ -64,16 +71,13 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>>
-    kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory
-                = new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(concurrency);
         factory.getContainerProperties().setPollTimeout(1500);
         return factory;
     }
-
 
     public Map<String, Object> consumerConfigsAck() {
         Map<String, Object> propsMap = new HashMap<>();
@@ -97,14 +101,11 @@ public class KafkaConsumerConfig {
     @Bean("factoryAck")
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>>
     kafkaListenerContainerFactoryAck() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory
-                = new ConcurrentKafkaListenerContainerFactory<>();
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactoryAck());
         factory.setConcurrency(concurrency);
         factory.getContainerProperties().setPollTimeout(1500);
-        factory.getContainerProperties()
-                .setAckMode(AbstractMessageListenerContainer
-                        .AckMode.MANUAL_IMMEDIATE);
+        factory.getContainerProperties().setAckMode(AbstractMessageListenerContainer.AckMode.MANUAL_IMMEDIATE);
         return factory;
     }
 }

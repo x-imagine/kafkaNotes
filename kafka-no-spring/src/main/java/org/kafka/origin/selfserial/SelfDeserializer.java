@@ -14,17 +14,16 @@ import java.util.Map;
  */
 public class SelfDeserializer implements Deserializer<DemoUser> {
 
-
     public void configure(Map<String, ?> configs, boolean isKey) {
         //do nothing
     }
 
     public DemoUser deserialize(String topic, byte[] data) {
         try {
-            if(data==null){
+            if (data == null) {
                 return null;
             }
-            if(data.length<8){
+            if (data.length < 8) {
                 throw new SerializationException("Error data size.");
             }
             ByteBuffer buffer = ByteBuffer.wrap(data);
@@ -35,12 +34,11 @@ public class SelfDeserializer implements Deserializer<DemoUser> {
             nameSize = buffer.getInt();
             byte[] nameByte = new byte[nameSize];
             buffer.get(nameByte);
-            name = new String(nameByte,"UTF-8");
-            return new DemoUser(id,name);
+            name = new String(nameByte, "UTF-8");
+            return new DemoUser(id, name);
         } catch (Exception e) {
-            throw new SerializationException("Error Deserializer DemoUser."+e);
+            throw new SerializationException("Error Deserializer DemoUser." + e);
         }
-
     }
 
     public void close() {

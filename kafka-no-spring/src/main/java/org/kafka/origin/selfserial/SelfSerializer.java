@@ -13,6 +13,7 @@ import java.util.Map;
  * 类说明：
  */
 public class SelfSerializer implements Serializer<DemoUser> {
+
     public void configure(Map<String, ?> configs, boolean isKey) {
         //do nothing
     }
@@ -21,26 +22,26 @@ public class SelfSerializer implements Serializer<DemoUser> {
         try {
             byte[] name;
             int nameSize;
-            if(data==null){
+            if (data == null) {
                 return null;
             }
-            if(data.getName()!=null){
+            if (data.getName() != null) {
                 name = data.getName().getBytes("UTF-8");
                 //字符串的长度
                 nameSize = data.getName().length();
-            }else{
+            } else {
                 name = new byte[0];
                 nameSize = 0;
             }
             /*id的长度4个字节，字符串的长度描述4个字节，
             字符串本身的长度nameSize个字节*/
-            ByteBuffer buffer = ByteBuffer.allocate(4+4+nameSize);
+            ByteBuffer buffer = ByteBuffer.allocate(4 + 4 + nameSize);
             buffer.putInt(data.getId());//4
             buffer.putInt(nameSize);//4
             buffer.put(name);//nameSize
             return buffer.array();
         } catch (Exception e) {
-            throw new SerializationException("Error serialize DemoUser:"+e);
+            throw new SerializationException("Error serialize DemoUser:" + e);
         }
     }
 

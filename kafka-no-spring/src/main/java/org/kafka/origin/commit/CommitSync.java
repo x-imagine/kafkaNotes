@@ -19,20 +19,14 @@ public class CommitSync {
 
     public static void main(String[] args) {
         /*消息消费者*/
-        Properties properties = KafkaConst.consumerConfig("CommitSync",
-                StringDeserializer.class,
-                StringDeserializer.class);
+        Properties properties = KafkaConst.consumerConfig("CommitSync", StringDeserializer.class, StringDeserializer.class);
         /*取消自动提交*/
         //TODO
-
-        KafkaConsumer<String,String> consumer
-                = new KafkaConsumer<String, String>(properties);
+        KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(properties);
         try {
-            consumer.subscribe(Collections.singletonList(
-                    BusiConst.CONSUMER_COMMIT_TOPIC));
+            consumer.subscribe(Collections.singletonList(BusiConst.CONSUMER_COMMIT_TOPIC));
             while(true){
-                ConsumerRecords<String, String> records
-                        = consumer.poll(500);
+                ConsumerRecords<String, String> records = consumer.poll(500);
                 for(ConsumerRecord<String, String> record:records){
                     System.out.println(String.format(
                             "主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",

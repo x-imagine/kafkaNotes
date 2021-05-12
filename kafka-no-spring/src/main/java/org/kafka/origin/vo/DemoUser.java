@@ -1,6 +1,7 @@
 package org.kafka.origin.vo;
 
 public class DemoUser {
+
     private int id;
     private String name;
 
@@ -36,4 +37,5 @@ public class DemoUser {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

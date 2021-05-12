@@ -18,31 +18,24 @@ import java.util.concurrent.Future;
  */
 public class SelfPartitionProducer {
 
-    private static KafkaProducer<String,String> producer = null;
+    private static KafkaProducer<String, String> producer = null;
 
     public static void main(String[] args) {
         /*消息生产者*/
-        Properties properties
-                = KafkaConst.producerConfig(StringSerializer.class,
-                StringSerializer.class);
+        Properties properties = KafkaConst.producerConfig(StringSerializer.class, StringSerializer.class);
         /*使用自定义的分区器*/
-        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,
-                "cn.enjoyedu.selfpartition.SelfPartitioner");
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, "cn.enjoyedu.selfpartition.SelfPartitioner");
         producer = new KafkaProducer<String, String>(properties);
         try {
             /*待发送的消息实例*/
-            ProducerRecord<String,String> record;
+            ProducerRecord<String, String> record;
             try {
-                record = new ProducerRecord<String,String>(
-                        BusiConst.SELF_PARTITION_TOPIC,"teacher01",
-                        "mark");
+                record = new ProducerRecord<String, String>(BusiConst.SELF_PARTITION_TOPIC, "teacher01", "mark");
                 Future<RecordMetadata> future = producer.send(record);
                 System.out.println("Do other something");
                 RecordMetadata recordMetadata = future.get();
-                if(null!=recordMetadata){
-                    System.out.println(String.format("偏移量：%s,分区：%s",
-                            recordMetadata.offset(),
-                            recordMetadata.partition()));
+                if (null != recordMetadata) {
+                    System.out.println(String.format("偏移量：%s,分区：%s", recordMetadata.offset(), recordMetadata.partition()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -51,8 +44,6 @@ public class SelfPartitionProducer {
             producer.close();
         }
     }
-
-
 
 
 }

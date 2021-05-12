@@ -33,7 +33,6 @@ public class HelloKafkaProducer2 {
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         //2、创建生产者
         KafkaProducer producer = new KafkaProducer(properties);
-
         try {
             //3、创建消息
             ProducerRecord<String, String> record;
@@ -49,8 +48,7 @@ public class HelloKafkaProducer2 {
             //如果生产者希望得到消息是否发送成功的结果：生产者确认（同步非阻塞方式）
             RecordMetadata recordMetadata = future.get();
             if(null!=recordMetadata){
-                System.out.println("offset:"+recordMetadata.offset()+"-"
-                        +"partition:"+recordMetadata.partition());
+                System.out.println("offset:"+recordMetadata.offset()+"-" +"partition:"+recordMetadata.partition());
             }
         } catch (Exception e) {
 

@@ -13,17 +13,13 @@
 
 <!--    <mvc:default-servlet-handler />-->
     <mvc:resources mapping="/js/**" location="js/"/>
-    <mvc:annotation-driven
-            content-negotiation-manager="contentNegotiationManager" />
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
 
     <context:component-scan base-package="cn.enjoyedu">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
-
-    <bean id="stringHttpMessageConverter"
-          class="org.springframework.http.converter.StringHttpMessageConverter">
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
                 <bean class="org.springframework.http.MediaType">
@@ -34,8 +30,8 @@
             </list>
         </property>
     </bean>
-    <bean id="mappingJackson2HttpMessageConverter"
-          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+    <bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
@@ -46,8 +42,7 @@
         </property>
     </bean>
 
-    <bean id="contentNegotiationManager"
-          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="mediaTypes">
             <map>
                 <entry key="html" value="text/html" />
@@ -60,17 +55,14 @@
         <property name="defaultContentType" value="text/html" />
     </bean>
 
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="0" />
         <property name="contentNegotiationManager" ref="contentNegotiationManager" />
-
         <property name="viewResolvers">
             <list>
                 <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
                 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                    <property name="viewClass"
-                              value="org.springframework.web.servlet.view.JstlView" />
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
                     <property name="prefix" value="/WEB-INF/pages/" />
                     <property name="suffix" value=".jsp"></property>
                 </bean>

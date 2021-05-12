@@ -32,7 +32,6 @@ public class KafkaProducerConfig {
     @Value("${kafka.producer.buffer.memory}")
     private int bufferMemory;
 
-
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
@@ -51,8 +50,7 @@ public class KafkaProducerConfig {
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
-        KafkaTemplate kafkaTemplate
-                = new KafkaTemplate<String, String>(producerFactory()) ;
+        KafkaTemplate kafkaTemplate = new KafkaTemplate<String, String>(producerFactory()) ;
         //kafkaTemplate.setProducerListener();
         return kafkaTemplate;
     }

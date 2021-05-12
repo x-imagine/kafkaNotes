@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/kafka")
 public class KafkaController {
+
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
@@ -34,8 +36,7 @@ public class KafkaController {
     }
 
     @RequestMapping(value = "/sendAck")
-    public String sendKafkaAck(@RequestParam(required = false) String key,
-                            @RequestParam(required = false) String value) {
+    public String sendKafkaAck(@RequestParam(required = false) String key, @RequestParam(required = false) String value) {
         try {
             logger.info("kafka的消息={}", value);
             kafkaTemplate.send("testAck", key, value);

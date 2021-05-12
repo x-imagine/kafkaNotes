@@ -11,7 +11,7 @@
     <modules>
         <module>kafka-no-spring</module>
         <module>kafka-with-spring</module>
-        <!--<module>kafka-with-springboot</module>-->
+        <module>kafka-with-springboot</module>
     </modules>
 
 

@@ -15,27 +15,23 @@ import java.util.Properties;
  */
 public class TestGroupProducer {
 
-    private static KafkaProducer<String,String> producer = null;
+    private static KafkaProducer<String, String> producer = null;
 
     public static void main(String[] args) {
         /*发送配置的实例*/
-        Properties properties
-                = KafkaConst.producerConfig(StringSerializer.class,
-                StringSerializer.class);
+        Properties properties = KafkaConst.producerConfig(StringSerializer.class, StringSerializer.class);
         /*消息生产者*/
         producer = new KafkaProducer<String, String>(properties);
         try {
             /*待发送的消息实例*/
-            ProducerRecord<String,String> record;
+            ProducerRecord<String, String> record;
             try {
-                for(int i=0;i<50;i++){
+                for (int i = 0; i < 50; i++) {
                     //consumer-group-test主题有两个分区
-                    record = new ProducerRecord<String,String>(
-                            BusiConst.CONSUMER_GROUP_TOPIC,
-                            "key"+i,"value"+i);
+                    record = new ProducerRecord<String, String>(BusiConst.CONSUMER_GROUP_TOPIC, "key" + i, "value" + i);
                     /*发送消息--发送后不管*/
                     producer.send(record);
-                    System.out.println("数据["+record+"]已发送。");
+                    System.out.println("数据[" + record + "]已发送。");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -44,8 +40,6 @@ public class TestGroupProducer {
             producer.close();
         }
     }
-
-
 
 
 }

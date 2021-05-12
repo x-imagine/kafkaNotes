@@ -17,25 +17,20 @@ import java.util.Collections;
  */
 public class SelfSerialConsumer {
 
-    private static KafkaConsumer<String,DemoUser> consumer = null;
+    private static KafkaConsumer<String, DemoUser> consumer = null;
 
     public static void main(String[] args) {
 
         /*消息消费者*/
-        consumer = new KafkaConsumer<String, DemoUser>(
-                KafkaConst.consumerConfig("selfserial",
-                StringDeserializer.class,
-                SelfDeserializer.class));
+        consumer = new KafkaConsumer<String, DemoUser>(KafkaConst.consumerConfig("selfserial", StringDeserializer.class, SelfDeserializer.class));
         try {
             consumer.subscribe(Collections.singletonList(BusiConst.SELF_SERIAL_TOPIC));
-            while(true){
-                ConsumerRecords<String, DemoUser> records
-                        = consumer.poll(500);
-                for(ConsumerRecord<String, DemoUser> record:records){
-                    System.out.println(String.format(
-                            "主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",
-                            record.topic(),record.partition(),record.offset(),
-                            record.key(),record.value()));
+            while (true) {
+                ConsumerRecords<String, DemoUser> records = consumer.poll(500);
+                for (ConsumerRecord<String, DemoUser> record : records) {
+                    System.out.println(String.format("主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",
+                            record.topic(), record.partition(), record.offset(),
+                            record.key(), record.value()));
                     //do our work
                 }
             }
@@ -43,8 +38,6 @@ public class SelfSerialConsumer {
             consumer.close();
         }
     }
-
-
 
 
 }

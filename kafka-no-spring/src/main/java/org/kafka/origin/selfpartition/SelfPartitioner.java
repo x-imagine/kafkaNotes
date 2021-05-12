@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class SelfPartitioner implements Partitioner {
 
-
     public int partition(String topic, Object key, byte[] keyBytes,
                          Object value, byte[] valueBytes, Cluster cluster) {
         //1、获取集群分区

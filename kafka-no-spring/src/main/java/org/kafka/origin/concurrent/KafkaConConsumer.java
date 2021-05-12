@@ -19,41 +19,31 @@ import java.util.concurrent.Executors;
  */
 public class KafkaConConsumer {
 
-    private static ExecutorService executorService
-            = Executors.newFixedThreadPool(
-                    BusiConst.CONCURRENT_PARTITIONS_COUNT);
+    private static ExecutorService executorService = Executors.newFixedThreadPool(BusiConst.CONCURRENT_PARTITIONS_COUNT);
 
-    private static class ConsumerWorker implements Runnable{
+    private static class ConsumerWorker implements Runnable {
 
-        private ThreadLocal<KafkaConsumer<String, String>> consumerThreadLocal =new ThreadLocal<KafkaConsumer<String, String>>(){
+        private ThreadLocal<KafkaConsumer<String, String>> consumerThreadLocal = new ThreadLocal<KafkaConsumer<String, String>>() {
             @Override
             protected KafkaConsumer<String, String> initialValue() {
-                Map<String, Object> properties
-                        = KafkaConst.consumerConfigMap("concurrent",
-                        StringDeserializer.class,
-                        StringDeserializer.class);
+                Map<String, Object> properties = KafkaConst.consumerConfigMap("concurrent", StringDeserializer.class, StringDeserializer.class);
                 return new KafkaConsumer<String, String>(properties);
             }
         };
 
-
-        public ConsumerWorker( String topic) {
+        public ConsumerWorker(String topic) {
             consumerThreadLocal.get().subscribe(Collections.singletonList(topic));
         }
 
         public void run() {
-            final String id = Thread.currentThread().getId()
-                    +"-"+System.identityHashCode(consumerThreadLocal.get());
+            final String id = Thread.currentThread().getId() + "-" + System.identityHashCode(consumerThreadLocal.get());
             try {
-                while(true){
-                    ConsumerRecords<String, String> records
-                            = consumerThreadLocal.get().poll(500);
-                    for(ConsumerRecord<String, String> record:records){
-                        System.out.println(id+"|"+String.format(
-                                "主题：%s，分区：%d，偏移量：%d，" +
-                                        "key：%s，value：%s",
-                                record.topic(),record.partition(),
-                                record.offset(),record.key(),record.value()));
+                while (true) {
+                    ConsumerRecords<String, String> records = consumerThreadLocal.get().poll(500);
+                    for (ConsumerRecord<String, String> record : records) {
+                        System.out.println(id + "|" + String.format("主题：%s，分区：%d，偏移量：%d，" + "key：%s，value：%s",
+                                record.topic(), record.partition(),
+                                record.offset(), record.key(), record.value()));
                         //do our work
                     }
                 }
@@ -65,16 +55,11 @@ public class KafkaConConsumer {
 
     public static void main(String[] args) {
         /*消费配置的实例*/
-        Map<String, Object> config
-                = KafkaConst.consumerConfigMap("concurrent",
-                StringDeserializer.class,
-                StringDeserializer.class);
-        for(int i = 0; i<BusiConst.CONCURRENT_PARTITIONS_COUNT; i++){
+        Map<String, Object> config = KafkaConst.consumerConfigMap("concurrent", StringDeserializer.class, StringDeserializer.class);
+        for (int i = 0; i < BusiConst.CONCURRENT_PARTITIONS_COUNT; i++) {
             executorService.submit(new ConsumerWorker(BusiConst.CONCURRENT_USER_INFO_TOPIC));
         }
     }
-
-
 
 
 }

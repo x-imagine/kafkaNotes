@@ -13,7 +13,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 public class MyListener {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     @KafkaListener(topics = {"test"})
     public void listen(ConsumerRecord<?, ?> record) {
         logger.info("收到消息的key: " + record.key());

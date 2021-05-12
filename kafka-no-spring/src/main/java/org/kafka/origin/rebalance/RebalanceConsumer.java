@@ -15,9 +15,8 @@ public class RebalanceConsumer {
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(BusiConst.CONCURRENT_PARTITIONS_COUNT);
 
-
     public static void main(String[] args) throws InterruptedException {
-        for(int i = 0; i<BusiConst.CONCURRENT_PARTITIONS_COUNT; i++){
+        for (int i = 0; i < BusiConst.CONCURRENT_PARTITIONS_COUNT; i++) {
             executorService.submit(new ConsumerWorker(false));
         }
         Thread.sleep(5000);

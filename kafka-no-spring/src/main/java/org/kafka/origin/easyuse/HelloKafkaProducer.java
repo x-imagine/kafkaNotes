@@ -31,7 +31,6 @@ public class HelloKafkaProducer {
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         //2、创建生产者
         KafkaProducer producer = new KafkaProducer(properties);
-
         try {
             //3、创建消息
             ProducerRecord<String, String> record;

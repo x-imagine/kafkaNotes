@@ -21,23 +21,18 @@ public class GroupCConsumer {
 
     public static void main(String[] args) {
         /*消费配置的实例*/
-        Properties properties
-                = KafkaConst.consumerConfig("groupC",
-                StringDeserializer.class,
-                StringDeserializer.class);
+        Properties properties = KafkaConst.consumerConfig("groupC", StringDeserializer.class, StringDeserializer.class);
         /*消息消费者*/
         consumer = new KafkaConsumer<String, String>(properties);
         try {
             consumer.subscribe(Collections.singletonList(BusiConst.CONSUMER_GROUP_TOPIC));
             consumer.poll(0);
             while(true){
-                ConsumerRecords<String, String> records
-                        = consumer.poll(500);//5秒  50000
+                ConsumerRecords<String, String> records = consumer.poll(500);//5秒  50000
                 for(ConsumerRecord<String, String> record:records){
                     System.out.println(String.format(
                             "主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",
-                            record.topic(),record.partition(),record.offset(),
-                            record.key(),record.value()));
+                            record.topic(),record.partition(),record.offset(), record.key(),record.value()));
                     //do our work
                 }
             }
